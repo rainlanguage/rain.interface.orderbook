@@ -1,11 +1,9 @@
-# foundry.template
+# rain.interface.orderbook
 
-Docs at https://rainprotocol.github.io/foundry.template
+Docs at https://rainprotocol.github.io/rain.interface.orderbook
 
-## Use as template
+Interfaces for interacting with Rain OrderBook including copies of the ERC3156
+flash lending interfaces.
 
-```
-forge init -t rainprotocol/foundry.template <projectname>
-cd <projectname>
-forge install foundry-rs/forge-std
-```
+Has a dependency on interpreter interfaces as OrderBook is fundamentally unusable
+without onchain interpretable orders.
