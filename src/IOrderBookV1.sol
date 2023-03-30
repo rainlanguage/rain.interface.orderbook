@@ -321,12 +321,7 @@ interface IOrderBookV1 is IERC3156FlashLender {
     /// @param orderHash The hash of the order as it is recorded onchain. Only
     /// the hash is stored in Orderbook storage to avoid paying gas to store the
     /// entire order.
-    event AddOrder(
-        address sender,
-        IExpressionDeployerV1 expressionDeployer,
-        Order order,
-        uint256 orderHash
-    );
+    event AddOrder(address sender, IExpressionDeployerV1 expressionDeployer, Order order, uint256 orderHash);
 
     /// An order has been removed from the orderbook. This effectively
     /// deactivates it. Orders can be added again after removal.
@@ -344,12 +339,7 @@ interface IOrderBookV1 is IERC3156FlashLender {
     /// @param config All config defining the orders to attempt to take.
     /// @param input The input amount from the perspective of sender.
     /// @param output The output amount from the perspective of sender.
-    event TakeOrder(
-        address sender,
-        TakeOrderConfig config,
-        uint256 input,
-        uint256 output
-    );
+    event TakeOrder(address sender, TakeOrderConfig config, uint256 input, uint256 output);
 
     /// Emitted when attempting to match an order that either never existed or
     /// was removed. An event rather than an error so that we allow attempting
@@ -373,11 +363,7 @@ interface IOrderBookV1 is IERC3156FlashLender {
     /// @param sender `msg.sender` clearing the order that had an excess ratio.
     /// @param owner Owner of the order that had an excess ratio.
     /// @param orderHash Hash of the order that had an excess ratio.
-    event OrderExceedsMaxRatio(
-        address sender,
-        address owner,
-        uint256 orderHash
-    );
+    event OrderExceedsMaxRatio(address sender, address owner, uint256 orderHash);
 
     /// Emitted before two orders clear. Covers both orders and includes all the
     /// state before anything is calculated.
@@ -385,12 +371,7 @@ interface IOrderBookV1 is IERC3156FlashLender {
     /// @param alice One of the orders.
     /// @param bob The other order.
     /// @param clearConfig Additional config required to process the clearance.
-    event Clear(
-        address sender,
-        Order alice,
-        Order bob,
-        ClearConfig clearConfig
-    );
+    event Clear(address sender, Order alice, Order bob, ClearConfig clearConfig);
 
     /// Emitted after two orders clear. Includes all final state changes in the
     /// vault balances, including the clearer's vaults.
@@ -403,11 +384,7 @@ interface IOrderBookV1 is IERC3156FlashLender {
     /// @param token The token the vault is for.
     /// @param id The vault ID to read.
     /// @return balance The current balance of the vault.
-    function vaultBalance(
-        address owner,
-        address token,
-        uint256 id
-    ) external view returns (uint256 balance);
+    function vaultBalance(address owner, address token, uint256 id) external view returns (uint256 balance);
 
     /// `msg.sender` deposits tokens according to config. The config specifies
     /// the vault to deposit tokens under. Delegated depositing is NOT supported.
@@ -487,9 +464,7 @@ interface IOrderBookV1 is IERC3156FlashLender {
     /// vaults processed.
     /// @return totalOutput Total tokens taken from `msg.sender` and distributed
     /// between vaults.
-    function takeOrders(
-        TakeOrdersConfig calldata config
-    ) external returns (uint256 totalInput, uint256 totalOutput);
+    function takeOrders(TakeOrdersConfig calldata config) external returns (uint256 totalInput, uint256 totalOutput);
 
     /// Allows `msg.sender` to match two live orders placed earlier by
     /// non-interactive parties and claim a bounty in the process. The clearer is
