@@ -3,7 +3,7 @@ pragma solidity ^0.8.18;
 
 import "./ierc3156/IERC3156FlashLender.sol";
 import "rain.interface.interpreter/LibEvaluable.sol";
-import "rain.interface.interpreter/IInterpreterCallerV1.sol";
+import "rain.interface.interpreter/IInterpreterCallerV2.sol";
 
 /// Configuration for a deposit. All deposits are processed by and for
 /// `msg.sender` so the vaults are unambiguous here.
@@ -122,7 +122,7 @@ struct TakeOrderConfig {
     Order order;
     uint256 inputIOIndex;
     uint256 outputIOIndex;
-    SignedContext[] signedContext;
+    SignedContextV1[] signedContext;
 }
 
 /// Additional config to a `clear` that allows two orders to be fully matched to
@@ -163,7 +163,7 @@ struct ClearStateChange {
     uint256 bobInput;
 }
 
-/// @title IOrderBookV1
+/// @title IOrderBookV2
 /// @notice An orderbook that deploys _strategies_ represented as interpreter
 /// expressions rather than individual orders. The order book contract itself
 /// behaves similarly to an `ERC4626` vault but with much more fine grained
@@ -291,7 +291,7 @@ struct ClearStateChange {
 /// As Orderbook supports any expression that can run on any `IInterpreterV1` and
 /// counterparties are available to the order, order strategies are free to
 /// implement KYC/membership, tracking, distributions, stock, buybacks, etc. etc.
-interface IOrderBookV1 is IERC3156FlashLender {
+interface IOrderBookV2 is IERC3156FlashLender, IInterpreterCallerV2 {
     /// Some tokens have been deposited to a vault.
     /// @param sender `msg.sender` depositing tokens. Delegated deposits are NOT
     /// supported.
@@ -517,7 +517,7 @@ interface IOrderBookV1 is IERC3156FlashLender {
         Order memory alice,
         Order memory bob,
         ClearConfig calldata clearConfig,
-        SignedContext[] memory aliceSignedContext,
-        SignedContext[] memory bobSignedContext
+        SignedContextV1[] memory aliceSignedContext,
+        SignedContextV1[] memory bobSignedContext
     ) external;
 }
